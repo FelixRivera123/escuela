@@ -3,7 +3,9 @@ package com.felix.escuela.services.maestros;
 import com.felix.escuela.dtos.maestros.MaestroRequest;
 import com.felix.escuela.dtos.maestros.MaestroResponse;
 import com.felix.escuela.entities.Maestro;
+import com.felix.escuela.exceptions.EntidadRelacionadaException;
 import com.felix.escuela.mappers.MaestroMapper;
+import com.felix.escuela.repositories.GrupoRepository;
 import com.felix.escuela.repositories.MaestroRepository;
 import com.felix.escuela.utils.ServicesUtils;
 import lombok.AllArgsConstructor;
@@ -20,6 +22,8 @@ import java.util.List;
 public class MaestroServicesImpl implements MaestroService {
 
     private final MaestroRepository maestroRepository;
+
+    private final GrupoRepository grupoRepository;
 
     private final MaestroMapper maestroMapper;
 
@@ -43,6 +47,7 @@ public class MaestroServicesImpl implements MaestroService {
 
         log.info("Registrando nuevo maestro...");
 
+
         Maestro maestro = maestroMapper.requestAEntidad(request);
 
         log.info("Nuevo maestro {} registrado", maestro.getNombre());
@@ -54,11 +59,36 @@ public class MaestroServicesImpl implements MaestroService {
 
     @Override
     public MaestroResponse actualizar(MaestroRequest request, Long id) {
-        return null;
+
+        Maestro maestro = obtenerMaestro(id);
+
+        log.info("Actualizando maestro...");
+
+        validarDatosUnicos(request, id);
+
+        maestro.actualizar(request.nombre(),
+                request.apellidoPaterno(),
+                request.apellidoMaterno(),
+                request.email(),
+                request.telefono());
+
+        log.info("Maestro {} actualizado correctamente", maestro.getNombre());
+        return maestroMapper.entidadAResponse(maestro);
     }
 
     @Override
     public void eliminar(Long id) {
+
+        Maestro maestro = obtenerMaestro(id);
+
+        if(grupoRepository.existsByMaestroId(id))
+            throw new EntidadRelacionadaException("El maestro no puede eliminarse por tener relaciones con grupos");
+
+        log.info("Eliminando maestro con id: {}", id);
+
+        maestroRepository.delete(maestro);
+
+        log.info("Maestro {} eliminado correctamente", id);
 
     }
 
@@ -66,19 +96,17 @@ public class MaestroServicesImpl implements MaestroService {
         return ServicesUtils.ontenerEntidadOException(maestroRepository, id, Maestro.class);
     }
 
-    private void validarDatosUnicos(MaestroRequest request){
+    private void validarDatosUnicos(MaestroRequest request, Long id){
 
         log.info ("Validando email único");
 
-        if(maestroRepository.existsByEmailIgnoreCase(request.email())){
+        if(maestroRepository.existsByEmailIgnoreCaseAndIdNot(request.email(),id)){
             throw new IllegalArgumentException("Ya existe un maestro registrado con el email: " + request.email());
         }
 
         log.info ("Validando teléfono único");
 
-        if(maestroRepository.existsByTelefono(request.telefono()))
+        if(maestroRepository.existsByTelefonoAndIdNot(request.telefono(), id))
             throw new IllegalArgumentException("Ya existe un maestro registrando con el teléfono: " + request.telefono());
-
-
     }
 }
