@@ -84,10 +84,10 @@ public class CursoServiceImpl implements CursoService {
 
         Curso curso = obtenerCurso(id);
 
-        if(grupoRepository.existsByMaestroId(curso.getId()))
-            throw new EntidadRelacionadaException("El curso no puede eliminarse por tener relaciones con grupos");
-
         log.info("Eliminando curso con id: {}", id);
+
+        if(grupoRepository.existsByCursoId(id))
+            throw new EntidadRelacionadaException("El curso no puede eliminarse por tener relaciones con grupos");
 
         cursoRepository.delete(curso);
 
