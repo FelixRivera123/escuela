@@ -33,4 +33,5 @@ public class StringCustomUtils {
     public static String localDateAString(LocalDate fecha){
         return fecha == null ? null : fecha.format(formato);
     }
+
 }
