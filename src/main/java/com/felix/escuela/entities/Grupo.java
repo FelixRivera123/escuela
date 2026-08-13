@@ -1,6 +1,8 @@
 package com.felix.escuela.entities;
 
+import com.felix.escuela.utils.StringCustomUtils;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Pattern;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -33,6 +35,25 @@ public class Grupo {
     @JoinColumn(name = "ID_AULA", nullable = false)
     private Aula aula;
 
-    @Column(name = "PERIODO", nullable = false,length = 20, unique = true)
+    @Column(name = "PERIODO", nullable = false,length = 7)
     private String periodo;
+
+    private void validarDatos(Curso curso, Maestro maestro, Aula aula, String periodo) {
+        if (curso == null) throw new IllegalArgumentException("El ID del curso es requerdio");
+        if (maestro== null) throw new IllegalArgumentException("El ID del maestro es requerdio");
+        if (aula == null) throw new IllegalArgumentException("El ID del aula es requerdio");
+
+        StringCustomUtils.validarTamanio(periodo, 7, 7,
+                "El periodo es requerido y debe tener entre 7 caracteres");
+    }
+
+    public void actualizar (Curso curso, Maestro maestro, Aula aula, String periodo) {
+
+        validarDatos(curso, maestro, aula, periodo);
+
+        this.curso = curso;
+        this.maestro = maestro;
+        this.aula = aula;
+        this.periodo = periodo.trim();
+    }
 }
