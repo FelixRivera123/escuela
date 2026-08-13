@@ -1,7 +1,5 @@
 package com.felix.escuela.dtos.grupos;
 
-import com.felix.escuela.entities.Aula;
-import com.felix.escuela.entities.Maestro;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
