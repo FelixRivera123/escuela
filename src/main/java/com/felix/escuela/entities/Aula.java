@@ -22,7 +22,7 @@ public class Aula {
     @Column(name = "NOMBRE", nullable = false, length = 100, unique = true)
     private String nombre;
 
-    @Column(name = "CAPACIDAD", nullable = false)
+    @Column(name = "CAPACIDAD", nullable = false, length = 30)
     private Integer capacidad;
 
     private void validarDatos(String nombre){

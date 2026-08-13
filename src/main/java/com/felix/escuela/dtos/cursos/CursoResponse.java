@@ -4,7 +4,7 @@ public record CursoResponse(
 
         Long id,
         String nombre,
-        String descrpcion,
+        String descripcion,
         Integer creditos
 ) {
 }

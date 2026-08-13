@@ -7,7 +7,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 @Slf4j
 public class ServicesUtils {
 
-    public static <E, ID> E ontenerEntidadOException(
+    public static <E, ID> E onbtenerEntidadOException(
             JpaRepository <E, ID> repository,
             ID id,
             Class<E> clase

@@ -47,6 +47,7 @@ public class MaestroServicesImpl implements MaestroService {
 
         log.info("Registrando nuevo maestro...");
 
+        validarDatosUnicos(request);
 
         Maestro maestro = maestroMapper.requestAEntidad(request);
 
@@ -64,7 +65,7 @@ public class MaestroServicesImpl implements MaestroService {
 
         log.info("Actualizando maestro...");
 
-        validarDatosUnicos(request, id);
+        validarCambiosUnicos(request, id);
 
         maestro.actualizar(request.nombre(),
                 request.apellidoPaterno(),
@@ -81,7 +82,7 @@ public class MaestroServicesImpl implements MaestroService {
 
         Maestro maestro = obtenerMaestro(id);
 
-        if(grupoRepository.existsByMaestroId(id))
+        if(grupoRepository. existsByMaestroId(id))
             throw new EntidadRelacionadaException("El maestro no puede eliminarse por tener relaciones con grupos");
 
         log.info("Eliminando maestro con id: {}", id);
@@ -93,10 +94,24 @@ public class MaestroServicesImpl implements MaestroService {
     }
 
     private Maestro obtenerMaestro(Long id) {
-        return ServicesUtils.ontenerEntidadOException(maestroRepository, id, Maestro.class);
+        return ServicesUtils.onbtenerEntidadOException(maestroRepository, id, Maestro.class);
     }
 
-    private void validarDatosUnicos(MaestroRequest request, Long id){
+    private void validarDatosUnicos(MaestroRequest request){
+
+        log.info ("Validando email único");
+
+        if(maestroRepository.existsByEmailIgnoreCase(request.email())){
+            throw new IllegalArgumentException("Ya existe un maestro registrado con el email: " + request.email());
+        }
+
+        log.info ("Validando teléfono único");
+
+        if(maestroRepository.existsByTelefono(request.telefono()))
+            throw new IllegalArgumentException("Ya existe un maestro registrando con el teléfono: " + request.telefono());
+    }
+
+    private void validarCambiosUnicos(MaestroRequest request, Long id) {
 
         log.info ("Validando email único");
 

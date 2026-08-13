@@ -93,7 +93,7 @@ public class AlumnoServiceImpl implements AlumnoService {
         log.info("Eliminando alumno con id: {}", id);
 
         if (inscripcionRepository.existsByAlumnoId(id))
-            throw new EntidadRelacionadaException("No se puede eliminar el alumno ya que tiene inscripciones asignadas");
+            throw new EntidadRelacionadaException("No se puede eliminar el alumno ya que tiene grupos asignados");
 
         alumnoRepository.delete(alumno);
 
@@ -101,7 +101,7 @@ public class AlumnoServiceImpl implements AlumnoService {
     }
 
     private Alumno obtenerAlumno(Long id) {
-        return ServicesUtils.ontenerEntidadOException(alumnoRepository, id, Alumno.class);
+        return ServicesUtils.onbtenerEntidadOException(alumnoRepository, id, Alumno.class);
     }
 
     private String generarMatricual(AlumnoRequest request){
