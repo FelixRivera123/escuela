@@ -3,7 +3,6 @@ package com.felix.escuela.dtos.grupos;
 import com.felix.escuela.dtos.datos.DatosAula;
 import com.felix.escuela.dtos.datos.DatosCurso;
 import com.felix.escuela.dtos.datos.DatosMaestro;
-import com.felix.escuela.entities.Horario;
 
 
 import java.util.List;
@@ -14,7 +13,7 @@ public record GrupoResponse(
     DatosCurso curso,
     DatosMaestro maestro,
     DatosAula aula,
-    List<Horario> horarios,
+    List<String> horarios,
     String periodo
 ) {
 }
