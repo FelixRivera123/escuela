@@ -70,4 +70,8 @@ public class Maestro {
         this.email = email.toLowerCase().trim();
         this.telefono = telefono.trim();
     }
+
+    public String nombreCompleto(){
+        return nombre + " " + apellidoPaterno + " " + apellidoMaterno;
+    }
 }

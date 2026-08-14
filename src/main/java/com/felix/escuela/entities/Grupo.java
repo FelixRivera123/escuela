@@ -8,6 +8,9 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Entity
 @Table(name = "GRUPOS", uniqueConstraints = @UniqueConstraint(
         name = "GRUPO_CU_MA_AU_PE_UK",
@@ -37,6 +40,10 @@ public class Grupo {
 
     @Column(name = "PERIODO", nullable = false,length = 7)
     private String periodo;
+
+    @Builder.Default
+    @OneToMany(mappedBy = "grupo", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private List<Horario> horarios = new ArrayList<>();
 
     private void validarDatos(Curso curso, Maestro maestro, Aula aula, String periodo) {
         if (curso == null) throw new IllegalArgumentException("El ID del curso es requerdio");

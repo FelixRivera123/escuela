@@ -1,11 +1,7 @@
 package com.felix.escuela.mappers;
 
-import com.felix.escuela.dtos.datos.DatosAula;
-import com.felix.escuela.dtos.datos.DatosCurso;
-import com.felix.escuela.dtos.datos.DatosMaestro;
-import com.felix.escuela.entities.Aula;
-import com.felix.escuela.entities.Curso;
-import com.felix.escuela.entities.Maestro;
+import com.felix.escuela.dtos.datos.*;
+import com.felix.escuela.entities.*;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -40,6 +36,28 @@ public class DatosMapper {
         return new DatosAula(
                 aula.getNombre(),
                 aula.getCapacidad()
+        );
+    }
+
+    public DatosGrupoHorario grupoADatosHorario(Grupo grupo) {
+        if (grupo == null) return null;
+
+        return new DatosGrupoHorario(
+                grupo.getCurso().getNombre(),
+                grupo.getMaestro().nombreCompleto(),
+                grupo.getAula().getNombre(),
+                grupo.getPeriodo()
+        );
+    }
+
+
+     DatosHorario horarioADatos(Horario horario) {
+        if (horario == null) return null;
+
+        return new DatosHorario(
+                horario.getDiaSemana().name(),
+                horario.getHoraInicio(),
+                horario.getHoraFin()
         );
     }
 }
