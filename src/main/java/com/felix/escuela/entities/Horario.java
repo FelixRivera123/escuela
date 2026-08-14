@@ -22,17 +22,17 @@ public class Horario {
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "ID_GRUPO")
+    @JoinColumn(name = "ID_GRUPO", nullable = false)
     private Grupo grupo;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "DIA",length = 15, nullable = false)
     private DiaSemana diaSemana;
 
-    @Column(name = "HORA_INICIO",length = 5, nullable = false)
+    @Column(name = "HORA_INICIO", nullable = false)
     private LocalTime horaInicio;
 
-    @Column(name = "HORA_FIN",length = 5, nullable = false)
+    @Column(name = "HORA_FIN", nullable = false)
     private LocalTime horaFin;
 
     private void validarHoras(LocalTime horaInicio, LocalTime horaFin) {
