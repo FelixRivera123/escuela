@@ -67,7 +67,8 @@ public class MaestroServicesImpl implements MaestroService {
 
         validarCambiosUnicos(request, id);
 
-        maestro.actualizar(request.nombre(),
+        maestro.actualizar(
+                request.nombre(),
                 request.apellidoPaterno(),
                 request.apellidoMaterno(),
                 request.email(),
