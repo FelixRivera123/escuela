@@ -37,13 +37,15 @@ public class GrupoMapper {
 
         if (entidad == null) return null;
 
-        return new GrupoResponse(
+        /*return new GrupoResponse(
                 entidad.getId(),
                 datosMapper.cursoADatos(entidad.getCurso()),
                 datosMapper.maestroADatos(entidad.getMaestro()),
                 datosMapper.aulaADatos(entidad.getAula()),
-                List.of(),
+
                 entidad.getPeriodo()
-        );
+        );*/
+        return null;
     }
+
 }
