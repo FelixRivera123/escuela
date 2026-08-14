@@ -19,12 +19,12 @@ public class HorarioMapper {
     ){
         if (request == null) return null;
 
-        return Horario.builder()
-                .grupo(grupo)
-                .diaSemana(request.dia())
-                .horaInicio(request.horaInicio())
-                .horaFin(request.horaFin())
-                .build();
+        return Horario.crear(
+                grupo,
+                request.dia(),
+                request.horaInicio(),
+                request.horaFin()
+        );
     };
 
     public HorarioResponse entidadAResponse(Horario entidad){

@@ -11,7 +11,7 @@ import java.time.LocalDate;
 @Entity
 @Table(name = "INSCRIPCIONES", uniqueConstraints = @UniqueConstraint(
         name = "INSCRIPCION_ALU_GRU_UK",
-        columnNames = {"ID_ALUMNO", "ID_CURSO"}
+        columnNames = {"ID_ALUMNO", "ID_GRUPO"}
 ))
 @AllArgsConstructor
 @NoArgsConstructor
@@ -37,4 +37,18 @@ public class Inscripcion {
 
     @OneToOne(mappedBy = "inscripcion")
     private Calificacion calificacion;
+
+    public void actualizar(
+            Alumno alumno,
+            Grupo grupo
+    ){
+        if (alumno == null)
+            throw new IllegalArgumentException("Alumno requerido.");
+
+        if (grupo == null)
+            throw new IllegalArgumentException("Grupo requerido.");
+
+        this.alumno = alumno;
+        this.grupo = grupo;
+    }
 }

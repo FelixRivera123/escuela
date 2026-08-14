@@ -31,4 +31,34 @@ public class Calificacion {
     @Builder.Default
     @Column(name = "FECHA_REGISTRO", nullable = false)
     private LocalDate fechaRegistro = LocalDate.now();
+
+    private void validarCalificacion(BigDecimal calificacion) {
+        if (calificacion == null)
+            throw new IllegalArgumentException("La calificacion es requerida");
+
+        if(calificacion.compareTo(BigDecimal.ZERO) < 0 || calificacion.compareTo(BigDecimal.TEN) > 0)
+            throw new IllegalArgumentException("La calificacion es entre 0 y 10");
+    }
+
+    public static Calificacion crear(
+            Inscripcion inscripcion,
+            BigDecimal calificacion
+    ){
+        if (inscripcion == null)
+            throw new IllegalArgumentException("La inscripcion es requerida");
+
+        Calificacion nueva = new Calificacion();
+
+        nueva.validarCalificacion(calificacion);
+        nueva.inscripcion = inscripcion;
+        nueva.calificacion = calificacion;
+        nueva.fechaRegistro = LocalDate.now();
+
+        return nueva;
+    }
+
+    public void actualizar(BigDecimal calificacion) {
+        validarCalificacion(calificacion);
+        this.calificacion = calificacion;
+    }
 }
