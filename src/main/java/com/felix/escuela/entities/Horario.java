@@ -7,6 +7,8 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalTime;
+
 @Entity
 @Table(name = "HORARIOS")
 @AllArgsConstructor
@@ -23,14 +25,31 @@ public class Horario {
     @JoinColumn(name = "ID_GRUPO")
     private Grupo grupo;
 
-
-    @Column(name = "DIA",length = 15, nullable = false)
     @Enumerated(EnumType.STRING)
+    @Column(name = "DIA",length = 15, nullable = false)
     private DiaSemana diaSemana;
 
     @Column(name = "HORA_INICIO",length = 5, nullable = false)
-    private String horaInicio;
+    private LocalTime horaInicio;
 
     @Column(name = "HORA_FIN",length = 5, nullable = false)
-    private String horaFin;
+    private LocalTime horaFin;
+
+    private void validarHoras(LocalTime horaInicio, LocalTime horaFin) {
+        if(horaInicio == null || horaFin == null)
+            throw new IllegalArgumentException("La hora de inicio y la hora de fin son requeridas");
+
+        if (!horaFin.isAfter(horaInicio))
+            throw new IllegalArgumentException("La hora de fin debe ser posterior a la hora de inicio");
+    }
+
+    public void actualizar(Grupo grupo, DiaSemana diaSemana, LocalTime horaInicio, LocalTime horaFin) {
+
+        validarHoras(horaInicio, horaFin);
+
+        this.grupo = grupo;
+        this.diaSemana = diaSemana;
+        this.horaInicio = horaInicio;
+        this.horaFin = horaFin;
+    }
 }

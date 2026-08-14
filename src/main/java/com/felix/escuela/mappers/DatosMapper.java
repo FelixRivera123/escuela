@@ -25,7 +25,10 @@ public class DatosMapper {
         if (maestro == null) return null;
 
         return new DatosMaestro(
-                maestro.getNombre(),
+                String.join(" ",
+                        maestro.getNombre(),
+                        maestro.getApellidoPaterno(),
+                        maestro.getApellidoMaterno()),
                 maestro.getEmail(),
                 maestro.getTelefono()
         );

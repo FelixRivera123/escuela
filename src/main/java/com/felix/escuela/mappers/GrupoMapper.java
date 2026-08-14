@@ -29,7 +29,7 @@ public class GrupoMapper {
                 .curso(curso)
                 .maestro(maestro)
                 .aula(aula)
-                .periodo(request.periodo())
+                .periodo(request.periodo().trim())
                 .build();
     }
 
