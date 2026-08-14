@@ -8,4 +8,15 @@ import org.springframework.stereotype.Repository;
 public interface InscripcionRepository extends JpaRepository<Inscripcion, Long> {
 
     boolean existsByAlumnoId(Long idAlumno);
+
+    boolean existsByAlumnoIdAndGrupoId(
+            Long idAlumno,
+            Long idGrupo
+    );
+
+    boolean existsByAlumnoIdAndGrupoIdAndIdNot(
+            Long idAlumno,
+            Long idGrupo,
+            Long idInscripcion
+    );
 }

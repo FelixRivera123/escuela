@@ -51,13 +51,44 @@ public class DatosMapper {
     }
 
 
-     DatosHorario horarioADatos(Horario horario) {
+     public DatosHorario horarioADatos(Horario horario) {
         if (horario == null) return null;
 
         return new DatosHorario(
                 horario.getDiaSemana().name(),
                 horario.getHoraInicio(),
                 horario.getHoraFin()
+        );
+    }
+
+    public DatosAlumnoInscripcion alumnoADatosInscripcion(Alumno alumno) {
+        if (alumno == null) return null;
+
+        return new DatosAlumnoInscripcion(
+                alumno.nombreCompleto(),
+                alumno.getMatricula(),
+                alumno.getEmail(),
+                alumno.getFechaIngreso()
+        );
+    }
+
+    public DatosCalificacion calificacionADatos(
+            Calificacion calificacion
+    ) {
+
+        if (calificacion == null) return null;
+
+        return new DatosCalificacion(
+                calificacion.getInscripcion()
+                        .getGrupo()
+                        .getCurso()
+                        .getNombre(),
+
+                calificacion.getInscripcion()
+                        .getGrupo()
+                        .getPeriodo(),
+
+                calificacion.getCalificacion()
         );
     }
 }

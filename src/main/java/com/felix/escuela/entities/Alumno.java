@@ -110,4 +110,8 @@ public class Alumno {
                  BigDecimal.valueOf(calificaciones.size()),
                 2, RoundingMode.HALF_UP);
     }
+
+    public String nombreCompleto(){
+        return nombre + " " + apellidoPaterno + " " + apellidoMaterno;
+    }
 }

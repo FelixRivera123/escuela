@@ -2,6 +2,7 @@ package com.felix.escuela.dtos.grupos;
 
 import com.felix.escuela.dtos.datos.DatosAula;
 import com.felix.escuela.dtos.datos.DatosCurso;
+import com.felix.escuela.dtos.datos.DatosHorario;
 import com.felix.escuela.dtos.datos.DatosMaestro;
 import com.felix.escuela.entities.Horario;
 
@@ -14,7 +15,7 @@ public record GrupoResponse(
     DatosCurso curso,
     DatosMaestro maestro,
     DatosAula aula,
-    List<String> horarios,
+    List<DatosHorario> horarios,
     String periodo
 ) {
 }
